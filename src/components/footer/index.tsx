@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import usePortfolioCalculations from '../../hooks/usePortfolioCalculations';
 import { DownArrow, UpArrow } from '../';
@@ -44,11 +44,11 @@ const BottomSheet: React.FC = ({ holdingsData }: Holding) => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <TouchableWithoutFeedback onPress={toggleBottomSheet} style={{ flex: 1 }}>
             <Animated.View style={[styles.bottomSheet, animatedStyle]}>
-                <TouchableOpacity onPress={toggleBottomSheet} style={styles.iconContainer}>
+                <View style={styles.iconContainer}>
                     {isExpanded ? <DownArrow size={ARROW_SIZE} color={THEME} /> : <UpArrow size={ARROW_SIZE} color={THEME} />}
-                </TouchableOpacity>
+                </View>
                 <View>
                     {isExpanded && TITLES?.map((item, index) => (
                         <DetailsItem item={item} value={getValue(index)} />
@@ -57,7 +57,7 @@ const BottomSheet: React.FC = ({ holdingsData }: Holding) => {
                     <DetailsItem item={TITLE_DEFAULT} value={totalPNL} />
                 </View>
             </Animated.View>
-        </View>
+        </TouchableWithoutFeedback>
     );
 };
 
